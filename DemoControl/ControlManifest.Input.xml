@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="PCFControls" constructor="DemoControl" version="0.0.1" display-name-key="DemoControl" description-key="DemoControl description" control-type="standard">
+  
+    <type-group name="numbers">
+      <type>Whole.None</type>
+      <type>Currency</type>
+      <type>FP</type>
+      <type>Decimal</type>
+    </type-group>
+    <property name="value" display-name-key="value_Display_Key" description-key="value_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/TS_IncrementControl.css" order="2" />
+      <resx path="strings/TS_IncrementControl.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
