@@ -73,22 +73,42 @@ export class DemoControl implements ComponentFramework.StandardControl<IInputs, 
 		 */
 		private onButtonClick(event: Event): void {
 
+			let divToBeRemoved = document.getElementById("palceholder");
+				if(divToBeRemoved != null){
+					this._container.removeChild(divToBeRemoved)
+				}
+
+				let placeholderDiv = document.createElement("div");
+				placeholderDiv.setAttribute("id","palceholder");
+				
+
 			const url = `https://customermanager.azurewebsites.net/api/v1/CustomerManager/${this._value}`;
 		    axios.get(url,{
 				headers: {
 				  'x-api-key': `36b407e0-57f7-4b85-abae-8be89baedad9`
 				}
 			  }).then(response => {
-				const { msfsi_EMailAddress : email , msfsi_FirstName : firstName, msfsi_LastName : lastName } = response.data;
-			    let innerDiv = this.BuildFormElement(email,firstName,lastName);
-				this._container.append(innerDiv);
+
+				
+				const { msfsi_EMailAddress : email ,
+					 msfsi_FirstName : firstName,
+					 msfsi_LastName : lastName,
+					 msfsi_MobilePhone : phone,
+					msfsi_LoanApplicantNumber : applicantNumber
+					} = response.data;
+
+				
+				let innerDiv = this.BuildFormElement(email,firstName,lastName , phone , applicantNumber);
+				placeholderDiv.appendChild(innerDiv);
+				this._container.append(placeholderDiv);
 			})
 			.catch(error => {
-				console.log(error.message);
 				this._errorMessage = document.createElement("input");
 				this._errorMessage.setAttribute("type", "label");
+				this._errorMessage.classList.add("SimpleIncrement_Input_Error_Style");
 				this._errorMessage.value = error.message;
-				this._container.appendChild(this._errorMessage);
+				placeholderDiv.appendChild(this._errorMessage);
+				this._container.appendChild(placeholderDiv);
 			});
 			this._notifyOutputChanged();
 		}
@@ -145,18 +165,32 @@ export class DemoControl implements ComponentFramework.StandardControl<IInputs, 
 		{
 		}
 
-		private BuildFormElement(email : string , firstName : string , lastName : string ) : HTMLDivElement{
+		private BuildFormElement(email : string , firstName : string , lastName : string , phone :string , applicantNumber :string  ) : HTMLDivElement{
 			let formElement = document.createElement("div");
 			formElement.setAttribute("id","innerDiv");
-			let _email = document.createElement("input");
-			_email.setAttribute("value",email);
-			let _firstName = document.createElement("input");
-			_firstName.setAttribute("value",firstName);
-			let _lastName = document.createElement("input");
-			_lastName.setAttribute("value",lastName);
-			formElement.appendChild(_email);
-			formElement.appendChild(_firstName);
-			formElement.appendChild(_lastName);
+			let para = document.createElement("p");
+			para.innerText = "Customer search response ";
+			formElement.appendChild(para);
+
+			let line = document.createElement("hr");
+			formElement.appendChild(line);
+
+			//email 
+			formElement.appendChild(this.CreateLableDiv("Email"));
+			formElement.appendChild(this.CreateInputDiv(email));
+		
+			//first name 
+			formElement.appendChild(this.CreateLableDiv("First Name "));
+			formElement.appendChild(this.CreateInputDiv(firstName));
+			//last name 
+			formElement.appendChild(this.CreateLableDiv("Last name"));
+			formElement.appendChild(this.CreateInputDiv(lastName));
+
+			formElement.appendChild(this.CreateLableDiv("Mobile"));
+			formElement.appendChild(this.CreateInputDiv(phone));
+
+			formElement.appendChild(this.CreateLableDiv("Customer Number"));
+			formElement.appendChild(this.CreateInputDiv(applicantNumber));
 			return formElement;
 		}
 
@@ -164,4 +198,24 @@ export class DemoControl implements ComponentFramework.StandardControl<IInputs, 
 			let emptyDiv = document.createElement("div");
 			return emptyDiv;
 		}
-}
+
+		private CreateSingleColumn(labelName : string , inputValue : string ) : HTMLDivElement {
+			let divElement = document.createElement("div");
+			divElement.appendChild(this.CreateLableDiv(labelName));
+			divElement.appendChild(this.CreateInputDiv(inputValue));
+			return divElement;
+		}
+
+		private CreateLableDiv(name : string ){
+			let label = document.createElement("label");
+			label.innerText = name;
+			return label;
+		}
+		private CreateInputDiv(inputValue : string ){
+			let label = document.createElement("input");
+			label.type = "text";
+			label.classList.add("type-2");
+			label.value = inputValue;
+			return label;
+		}
+	}

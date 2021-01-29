@@ -1,15 +1,4 @@
-/*
-	This file is part of the Microsoft PowerApps code samples. 
-	Copyright (C) Microsoft Corporation.  All rights reserved. 
-	This source code is intended only as a supplement to Microsoft Development Tools and/or  
-	on-line documentation.  See these other materials for detailed information regarding  
-	Microsoft code samples. 
-
-	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER  
-	EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF  
-	MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. 
- */
-.SampleNamespace\.TSIncrementControl button.SimpleIncrement_Button_Style {
+.PCFControls\.DemoControl button.SimpleIncrement_Button_Style {
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
@@ -23,6 +12,37 @@
   text-align: center;
 }
 
-.SampleNamespace\.TSIncrementControl button.SimpleIncrement_Input_Error_Style {
+.PCFControls\.DemoControl button.SimpleIncrement_Input_Error_Style {
   color: red;
+}
+
+.PCFControls\.DemoControl input {
+  display: block;
+  width: 95%;
+  margin: 10px 0 10px 10px;
+  padding: 10px;
+}
+.PCFControls\.DemoControl .type-1 {
+  border-radius: 10px;
+  border: 1px solid #eee;
+  transition: 0.3s border-color;
+}
+.PCFControls\.DemoControl .type-1:hover {
+  border: 1px solid #aaa;
+}
+
+.PCFControls\.DemoControl .type-2 {
+  background-color: #fafafa;
+  border: 0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  transition: 0.3s box-shadow;
+}
+.PCFControls\.DemoControl .type-2:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.PCFControls\.DemoControl .container {
+  padding: 16px;
+  background-color: white;
+  width: 100%;
 }
